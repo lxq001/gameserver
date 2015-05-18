@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 
+import packet.InBoundPacket;
+import utils.OPUtils;
 import config.Config;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
@@ -14,11 +16,17 @@ public class NetworkHandler extends ByteToMessageDecoder {
 	@Override
 	protected void decode(ChannelHandlerContext ctx, ByteBuf in,
 			List<Object> out) throws Exception {
-		if(!in.isReadable()){
-			return;
+		try {
+			if (!in.isReadable()) {
+				return;
+			}
+			int op = in.readShort();
+			InBoundPacket inBound = (InBoundPacket) OPUtils.getInstance(op + "");
+			inBound.setData(in);
+			inBound.hander();
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		int op = in.readShort();
-		String op_hex = Integer.toHexString(op);
 		
 		
 	}

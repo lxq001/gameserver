@@ -12,8 +12,23 @@ import java.util.List;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
-@OP(op = "1")
-public class FileUtils {
+import packet.InBoundPacket;
+import config.Config;
+
+public class OPUtils {
+	
+	public static Object getInstance(String op) throws ClassNotFoundException, InstantiationException, IllegalAccessException{
+		String simpleName = Config.OPs.get(op);
+		if(op == null){
+			System.out.println("op:["+op +"] is not exist");
+			return null;
+		}
+		
+		return Class.forName(simpleName).newInstance();
+	}
+	
+	
+	
 	/**
 	 * 
 	 * @param packetname 完整的包名 firstName == null lastname == null
@@ -26,12 +41,12 @@ public class FileUtils {
 	 */
 	public static List<String> createObjectFromJarOrFile(String packetname, String prefix) throws IOException,
 			ClassNotFoundException, InstantiationException, IllegalAccessException {
-		List<String> container = null;
+		List<String> container = new ArrayList<String>();
 
 		String path = packetname.replaceAll("\\.", "/");
 
 		if (prefix != null) {
-			String simpleName = packetname + "." + prefix;
+			String simpleName = packetname + "." + prefix.substring(0, prefix.lastIndexOf('.'));
 			//			createObject(simpleName, objs);
 			intoContainer(simpleName, container);
 		} else {
@@ -49,7 +64,7 @@ public class FileUtils {
 						File[] files = file.listFiles(new Filter(prefix));
 						for (int i = 0; i < files.length; i++) {
 							File f = files[i];
-							String simpleName = f.getName() + "." + prefix;
+							String simpleName = f.getName();
 							//						createObject(simpleName, objs);
 							intoContainer(simpleName, container);
 						}
@@ -100,15 +115,11 @@ public class FileUtils {
 	 * @param container
 	 */
 	private static void intoContainer(String simpleName, List<String> container) {
+		System.out.println("initOPs------>"+simpleName);
 		container.add(simpleName);
 	}
 
-	private static void createObject(String simpleName, List<Object> objs) throws ClassNotFoundException,
-			InstantiationException, IllegalAccessException {
-		Class clazz = Class.forName(simpleName);
-		Object obj = clazz.newInstance();
-		objs.add(obj);
-	}
+
 
 }
 

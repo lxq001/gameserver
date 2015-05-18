@@ -14,6 +14,6 @@ public class AppTest extends TestCase {
 		Config.initConfig("netty_config");
 	}
 	public void testInitInboundPacket(){
-		Config.initInBoundPacket("main.java.utils", null);
+		Config.initOPs("utils", "OPUtils.class");
 	}
 }
