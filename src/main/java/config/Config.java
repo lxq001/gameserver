@@ -21,16 +21,19 @@ public class Config {
 	public static final String WORK_THREAD_KEY = "work.thread";
 
 	NetworkChannelInitializer<Channel> channelInitializer = new NetworkChannelInitializer<Channel>();
-	private static  Map<String, String> confings = new HashMap<String, String>();
+	private static  Map<String, String> configs = new HashMap<String, String>();
 
 	public static  Map<String, String> OPs = new HashMap<String, String>();
-
+	public static void init(){
+		//netty配置表加载
+		initConfig("netty_config", configs);
+	}
 	/**
 	 * 加载配置文件
 	 * 
 	 * @param filename
 	 */
-	public static void initConfig(String filename) {
+	public static void initConfig(String filename,Map<String,String> map) {
 		ResourceBundle bundle = ResourceBundle.getBundle(filename);
 
 		System.out.println(bundle.getBaseBundleName());
@@ -38,7 +41,7 @@ public class Config {
 		while (enumeration.hasMoreElements()) {
 			String key = (String) enumeration.nextElement();
 			String value = bundle.getString(key);
-			confings.put(key, value);
+			map.put(key, value);
 		}
 	}
 

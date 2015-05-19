@@ -11,7 +11,6 @@ import junit.framework.TestSuite;
 public class AppTest extends TestCase {
 	
 	public void testConfig(){
-		Config.initConfig("netty_config");
 	}
 	public void testInitInboundPacket(){
 		Config.initOPs("utils", "OPUtils.class");
