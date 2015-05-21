@@ -21,12 +21,16 @@ public class Config {
 	public static final String WORK_THREAD_KEY = "work.thread";
 
 	NetworkChannelInitializer<Channel> channelInitializer = new NetworkChannelInitializer<Channel>();
-	private static  Map<String, String> configs = new HashMap<String, String>();
+	private static  Map<String, String> netty_configs = new HashMap<String, String>();
+	
+	private static Map<String,String> db_configs = new HashMap<String, String>();
 
 	public static  Map<String, String> OPs = new HashMap<String, String>();
 	public static void init(){
 		//netty配置表加载
-		initConfig("netty_config", configs);
+		initConfig("netty_config", netty_configs);
+		//db配置文件加载
+		initConfig("c3p0_config", db_configs);
 	}
 	/**
 	 * 加载配置文件
