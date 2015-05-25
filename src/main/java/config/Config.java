@@ -1,6 +1,8 @@
 package config;
 
 import io.netty.channel.Channel;
+import io.netty.channel.EventLoopGroup;
+import io.netty.channel.nio.NioEventLoopGroup;
 
 import java.io.IOException;
 import java.net.URL;
@@ -9,6 +11,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
+
+import org.apache.commons.lang3.StringUtils;
 
 import packet.InBoundPacket;
 import utils.OP;
@@ -19,9 +23,12 @@ public class Config {
 	public static final String MAIN_PORT_KEY = "main.port";
 	public static final String BOSS_THREAD_KEY = "boss.thread";
 	public static final String WORK_THREAD_KEY = "work.thread";
-
+	
+	public static EventLoopGroup BOSS_EVENTLOOPGROUP = null;
+	public static EventLoopGroup WORK_EVENTLOOPGROUP = null;
+	
 	NetworkChannelInitializer<Channel> channelInitializer = new NetworkChannelInitializer<Channel>();
-	private static  Map<String, String> netty_configs = new HashMap<String, String>();
+	public static  Map<String, String> netty_configs = new HashMap<String, String>();
 	
 	private static Map<String,String> db_configs = new HashMap<String, String>();
 
@@ -31,7 +38,15 @@ public class Config {
 		initConfig("netty_config", netty_configs);
 		//db配置文件加载
 		initConfig("c3p0_config", db_configs);
+		
+		creatEventLoopGroup();
 	}
+	public static void creatEventLoopGroup(){
+		BOSS_EVENTLOOPGROUP = new NioEventLoopGroup(Integer.parseInt(netty_configs.get(BOSS_THREAD_KEY)));
+		WORK_EVENTLOOPGROUP = new NioEventLoopGroup(Integer.parseInt(netty_configs.get(WORK_THREAD_KEY)));
+	}
+	
+	
 	/**
 	 * 加载配置文件
 	 * 

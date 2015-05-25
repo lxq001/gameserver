@@ -2,10 +2,8 @@ package db;
 
 import java.lang.reflect.InvocationTargetException;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.IllegalFormatException;
 import java.util.List;
 import java.util.Map;
 
@@ -23,7 +21,7 @@ import com.alibaba.fastjson.JSONObject;
 
 import db.pojo.Pojo;
 
-@SuppressWarnings({ "rawtypes", "unchecked" })
+@SuppressWarnings({"unchecked" })
 public class QueryUtils {
 
 	static DataSource dataSource = DBManager.getDataSource();
@@ -154,8 +152,6 @@ public class QueryUtils {
 	 */
 	public static void writePojo(Pojo pojo, DBHandleType dbht) throws IllegalAccessException,
 			InvocationTargetException, NoSuchMethodException, SQLException {
-		//将对象序列化成jsonstring对象
-		String writeStr = "";
 		//将pojo的名字做为表名
 		String tabName = pojo.getClass().getSimpleName();
 		String key = getTabKey(tabName);

@@ -3,9 +3,7 @@ package db;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.sql.DataSource;
@@ -16,8 +14,6 @@ import com.mchange.v1.db.sql.ConnectionUtils;
 import com.mchange.v2.c3p0.DataSources;
 
 import config.Config;
-import db.pojo.Address;
-import db.pojo.Person;
 
 public class DBManager {
 
@@ -92,9 +88,9 @@ public class DBManager {
 //		Person p = new Person(0L,1L,"lin",32,null);
 //		p.setAddress(list);
 //		QueryUtils.writePojo(p, DBHandleType.DEL);
-		Person p = QueryUtils.readPojo(Person.class, 1L);
+//		Person p = QueryUtils.readPojo(Person.class, 1L);
 		
-		System.out.println(p.getAge());
+//		System.out.println(p.getAge());
 	}
 	
 	
